@@ -1,24 +1,25 @@
 package br.com.cristianoaf81;
 
-import java.util.concurrent.atomic.AtomicLong;
+// import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import br.com.cristianoaf81.exceptions.UnsupportedMathOperationException;
 
 @RestController
 class MathController {
 
-  private final AtomicLong counter = new AtomicLong();
+  // private final AtomicLong counter = new AtomicLong();
 
   @RequestMapping(value="/sum/{numberOne}/{numberTwo}", method=RequestMethod.GET)
   public Double sum(
     @PathVariable(value="numberOne") String numberOne,
     @PathVariable(value="numberTwo") String numberTwo
-  ) throws Exception {
+  ) throws UnsupportedMathOperationException {
     
     if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-      throw new Exception("Non numeric value(s) detected!");
+      throw new UnsupportedMathOperationException("Non numeric value(s) detected!");
     }
 
     return convertToDouble(numberOne) + convertToDouble(numberTwo);
