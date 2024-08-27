@@ -17,23 +17,23 @@ import br.com.cristianoaf81.exceptions.UnsupportedMathOperationException;
 // @RestController
 @RestControllerAdvice
 class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
-  
-  @ExceptionHandler(Exception.class)
-  public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
-    Date timestamp = new Date();
-    String message = ex.getMessage();
-    String details = request.getDescription(false);
-    ExceptionResponse exceptionResponse = new ExceptionResponse(timestamp, message, details);
-    return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-  }
 
-  @ExceptionHandler(UnsupportedMathOperationException.class)
-  public final ResponseEntity<ExceptionResponse> handleUnsupportedMathOpException(Exception ex, WebRequest request) {
-    Date timestamp = new Date();
-    String message = ex.getMessage();
-    String details = request.getDescription(false);
-    ExceptionResponse exceptionResponse = new ExceptionResponse(timestamp, message, details);
-    return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST);
-  }
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
+        Date timestamp = new Date();
+        String message = ex.getMessage();
+        String details = request.getDescription(false);
+        ExceptionResponse exceptionResponse = new ExceptionResponse(timestamp, message, details);
+        return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(UnsupportedMathOperationException.class)
+    public final ResponseEntity<ExceptionResponse> handleUnsupportedMathOpException(Exception ex, WebRequest request) {
+        Date timestamp = new Date();
+        String message = ex.getMessage();
+        String details = request.getDescription(false);
+        ExceptionResponse exceptionResponse = new ExceptionResponse(timestamp, message, details);
+        return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 
 }

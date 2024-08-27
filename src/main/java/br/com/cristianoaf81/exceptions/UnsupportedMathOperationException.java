@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class UnsupportedMathOperationException extends RuntimeException {
-  private static final long serialVersionUID = 3384769583687096054L;
+    private static final long serialVersionUID = 3384769583687096054L;
 
-  public UnsupportedMathOperationException(String message) {
-    super(message);
-  }
+    public UnsupportedMathOperationException(String message) {
+        super(message);
+    }
 }
