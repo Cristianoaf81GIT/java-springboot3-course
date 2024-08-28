@@ -4,6 +4,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import br.com.cristianoaf81.exceptions.UnsupportedMathOperationException;
 
+
 @Service
 public class MathService {
 
