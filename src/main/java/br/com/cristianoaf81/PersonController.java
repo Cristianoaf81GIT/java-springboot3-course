@@ -1,5 +1,6 @@
 package br.com.cristianoaf81;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,11 @@ class PersonController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Person findById(@PathVariable(value = "id") String id) {
         return this.service.findById(id);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Person> findAll() {
+        return this.service.findAll();
     }
 
 }

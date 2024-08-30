@@ -1,5 +1,8 @@
 package br.com.cristianoaf81.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,26 @@ public class PersonServices {
         person.setFirstName("Leandro");
         person.setLastName("Costa");
         person.setAddress("Uberlândia-MG");
+        person.setGender("Male");
+        return person;
+    }
+
+    public List<Person> findAll() {
+        logger.info("Finding all people");
+        List<Person> persons = new ArrayList<>();
+        IntStream.range(0, 8).forEach(fakeId -> {
+            Person p = mockPerson(fakeId);
+            persons.add(p);
+        });
+        return persons;
+    }
+
+    private Person mockPerson(int fakeId) {
+        Person person = new Person();
+        person.setId(counter.incrementAndGet());
+        person.setFirstName("Person " + fakeId);
+        person.setLastName("Last name " + fakeId);
+        person.setAddress("Somewhere in Brasil " + fakeId);
         person.setGender("Male");
         return person;
     }
