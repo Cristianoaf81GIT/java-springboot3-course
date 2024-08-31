@@ -55,10 +55,12 @@ public class Person implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
         Person p = (Person) o;
         return id == p.id && Objects.equals(firstName, p.firstName) && Objects.equals(lastName, p.lastName)
                 && Objects.equals(address, p.address) && Objects.equals(gender, p.gender);
