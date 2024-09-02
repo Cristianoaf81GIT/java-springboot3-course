@@ -1,1 +1,20 @@
-spring.application.name=java-springboot3-course
+spring:
+  
+  application:
+      name: java-springboot3-course
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rest_with_spring_boot_udemy?useTimezone=true&serverTimezone=UTC
+    username: <user>
+    password: <pass>
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+        #    properties:
+        #hibernate:
+        #dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: false
+    open-in-view: true
+
