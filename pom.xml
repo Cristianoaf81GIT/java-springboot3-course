@@ -83,7 +83,12 @@
       <plugin>
         <groupId>net.revelc.code.formatter</groupId>
         <artifactId>formatter-maven-plugin</artifactId>
-        <version>2.24.1</version>
+            <version>2.24.1</version>
+            <configuration>
+                <lineEnding>CRLF</lineEnding>
+                <encoding>UTF-8</encoding>
+                    <!-- <configFile>${project.basedir}/formatter.config.xml</configFile> -->
+            </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

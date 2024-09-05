@@ -20,7 +20,7 @@ class PersonController {
     private PersonServices service;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person findById(@PathVariable(value = "id") String id) {
+    public Person findById(@PathVariable(value = "id") Long id) {
         return this.service.findById(id);
     }
 
@@ -39,8 +39,7 @@ class PersonController {
         return this.service.update(person);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable(value = "id") String id) {
+    public void delete(@PathVariable(value = "id") Long id) {
         this.service.delete(id);
     }
 
