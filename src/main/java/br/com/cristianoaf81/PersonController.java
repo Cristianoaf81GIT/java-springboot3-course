@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import br.com.cristianoaf81.model.Person;
+import br.com.cristianoaf81.data.vo.v1.PersonVO;
 import br.com.cristianoaf81.services.PersonServices;
 
 @RestController
@@ -23,22 +23,22 @@ class PersonController {
     private PersonServices service;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person findById(@PathVariable(value = "id") Long id) {
+    public PersonVO findById(@PathVariable(value = "id") Long id) {
         return this.service.findById(id);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Person> findAll() {
+    public List<PersonVO> findAll() {
         return this.service.findAll();
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Person create(@RequestBody() Person person) {
+    public PersonVO create(@RequestBody() PersonVO person) {
         return this.service.create(person);
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Person update(@RequestBody() Person person) {
+    public PersonVO update(@RequestBody() PersonVO person) {
         return this.service.update(person);
     }
 

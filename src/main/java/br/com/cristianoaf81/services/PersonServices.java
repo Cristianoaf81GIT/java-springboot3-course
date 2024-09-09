@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.cristianoaf81.exceptions.ResourceNotFoundException;
-import br.com.cristianoaf81.model.Person;
+import br.com.cristianoaf81.data.vo.v1.PersonVO;
 import br.com.cristianoaf81.repositories.PersonRepository;
 
 @Service
@@ -15,12 +15,13 @@ public class PersonServices {
     PersonRepository repository;
     private Logger logger = Logger.getLogger(PersonServices.class.getName());
 
-    public Person create(Person person) {
+    public PersonVO create(PersonVO person) {
         logger.info("Creating a new person");
-        return repository.save(person);
+        // repository.save(person);
+        return null;
     }
 
-    public Person update(Person person) {
+    public PersonVO update(PersonVO person) {
         logger.info("Updating person");
         String exceptionMessage = "Record nof found for this id";
         Supplier<ResourceNotFoundException> sup = () -> new ResourceNotFoundException(exceptionMessage);
@@ -32,7 +33,8 @@ public class PersonServices {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return repository.save(entity);
+        repository.save(entity);
+        return null;
     }
 
     public void delete(Long id) {
@@ -43,14 +45,16 @@ public class PersonServices {
         repository.delete(entity);
     }
 
-    public Person findById(Long id) {
-        logger.info("Finding one Person");
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
+    public PersonVO findById(Long id) {
+        logger.info("Finding one PersonVO");
+        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
+        return null;
     }
 
-    public List<Person> findAll() {
+    public List<PersonVO> findAll() {
         logger.info("Finding all people");
-        return repository.findAll();
+        repository.findAll().stream();
+        return null;
     }
 
 }
