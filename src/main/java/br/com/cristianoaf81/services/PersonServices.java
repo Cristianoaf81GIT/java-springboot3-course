@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.cristianoaf81.exceptions.ResourceNotFoundException;
+import br.com.cristianoaf81.mapper.DozerMapper;
+import br.com.cristianoaf81.model.Person;
 import br.com.cristianoaf81.data.vo.v1.PersonVO;
 import br.com.cristianoaf81.repositories.PersonRepository;
 
@@ -17,8 +19,9 @@ public class PersonServices {
 
     public PersonVO create(PersonVO person) {
         logger.info("Creating a new person");
-        // repository.save(person);
-        return null;
+        var entity = DozerMapper.parseObject(person, Person.class);
+        var vo = repository.save(entity);
+        return DozerMapper.parseObject(vo, PersonVO.class);
     }
 
     public PersonVO update(PersonVO person) {
@@ -32,9 +35,8 @@ public class PersonServices {
         entity.setLastName(person.getLastName());
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
-
-        repository.save(entity);
-        return null;
+        var vo = repository.save(entity);
+        return DozerMapper.parseObject(vo, PersonVO.class);
     }
 
     public void delete(Long id) {
@@ -47,14 +49,13 @@ public class PersonServices {
 
     public PersonVO findById(Long id) {
         logger.info("Finding one PersonVO");
-        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
-        return null;
+        var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
+        return DozerMapper.parseObject(entity, PersonVO.class);
     }
 
     public List<PersonVO> findAll() {
         logger.info("Finding all people");
-        repository.findAll().stream();
-        return null;
+        return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
     }
 
 }
