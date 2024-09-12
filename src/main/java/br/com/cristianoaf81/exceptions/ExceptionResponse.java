@@ -5,27 +5,30 @@ import java.util.Date;
 
 public class ExceptionResponse implements Serializable {
 
-    private static final long serialVersionUID = -740161521741537868L;
-    private Date timestamp;
-    private String message;
-    private String details;
+	private static final long serialVersionUID = -740161521741537868L;
 
-    public ExceptionResponse(Date timestamp, String message, String details) {
-        this.timestamp = timestamp;
-        this.message = message;
-        this.details = details;
-    }
+	private Date timestamp;
 
-    public Date getTimestamp() {
-        return this.timestamp;
-    }
+	private String message;
 
-    public String getMessage() {
-        return this.message;
-    }
+	private String details;
 
-    public String getDetails() {
-        return this.details;
-    }
+	public ExceptionResponse(Date timestamp, String message, String details) {
+		this.timestamp = timestamp;
+		this.message = message;
+		this.details = details;
+	}
+
+	public Date getTimestamp() {
+		return this.timestamp;
+	}
+
+	public String getMessage() {
+		return this.message;
+	}
+
+	public String getDetails() {
+		return this.details;
+	}
 
 }
