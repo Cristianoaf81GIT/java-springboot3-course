@@ -15,9 +15,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-        #    properties:
+      #properties:
         #hibernate:
-        #dialect: 
+          #dialect: ${HIBERNATE_ORA_DIALECT}
     show-sql: false
     open-in-view: true
 
