@@ -40,4 +40,5 @@ env.properties
 ### http requests ###
 ./http
 http
-
+http/**/*.*
+./http/*.json
