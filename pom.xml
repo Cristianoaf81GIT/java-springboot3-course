@@ -143,6 +143,22 @@
                 <artifactId>spring-javaformat-maven-plugin</artifactId>
                 <version>0.0.43</version>
             </plugin>
+            <plugin>
+                 <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <configuration>
+                    <user>${env.dbuser}</user>
+                    <password>${env.dbpass}</password>
+                    <url>${env.dburl}</url>
+                    </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.mysql</groupId>
+                        <artifactId>mysql-connector-j</artifactId>
+                        <version>8.4.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
 	</build>
 

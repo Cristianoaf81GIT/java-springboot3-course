@@ -25,9 +25,35 @@ If you manually switch to a different parent and actually want the inheritance, 
 
 ### format code with maven formatter-maven-plugin
 
-```java
-mvn formatter:format
+```bash 
+./mvn formatter:format
 
+```
+
+### install dependencies
+```bash
+./mvnw clean install -DskipTests
+
+```
+
+### run app
+```bash
+./mvnw spring-boot:run 
+
+```
+
+### run db migrations
+```bash
+./mvnw flyway:migrate
+```
+
+### Enviroment variables
+
+```bash 
+
+export dbuser=dbusernamehere
+export dbpass=dbpasswordhere
+export dburl=jdbcurlconnectionurlhere
 ```
 
 
