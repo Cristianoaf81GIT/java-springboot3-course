@@ -1,5 +1,8 @@
 spring:
-  
+
+  profiles:
+    active: dev
+
   application:
       name: java-springboot3-course
 
