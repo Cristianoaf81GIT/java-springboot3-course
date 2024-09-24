@@ -23,22 +23,24 @@ class PersonController {
     @Autowired
     private PersonServices service;
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public PersonVO findById(@PathVariable(value = "id") Long id) {
         return this.service.findById(id);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public List<PersonVO> findAll() {
         return this.service.findAll();
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, consumes = {
+            MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public PersonVO create(@RequestBody() PersonVO person) {
         return this.service.create(person);
     }
 
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, consumes = {
+            MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public PersonVO update(@RequestBody() PersonVO person) {
         return this.service.update(person);
     }
@@ -49,7 +51,9 @@ class PersonController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(value = "/v2", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/v2", produces = { MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE }, consumes = { MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE })
     public PersonVO2 createv2(@RequestBody() PersonVO2 person) {
         return this.service.createv2(person);
     }
