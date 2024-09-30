@@ -2,16 +2,17 @@ package br.com.cristianoaf81.data.vo.v1;
 
 import java.io.Serializable;
 import java.util.Objects;
+import org.springframework.hateoas.RepresentationModel;
 // import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({ "id", "first_name", "lastname", "address", "gender" })
-public class PersonVO implements Serializable {
+public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
 
     private static final long serialVersionUID = -6255103960109907768L;
 
-    private Long id;
+    private Long key;
 
     @JsonProperty("first_name")
     private String firstName;
@@ -24,12 +25,12 @@ public class PersonVO implements Serializable {
     // @JsonIgnore()
     private String gender;
 
-    public Long getId() {
-        return this.id;
+    public Long getKey() {
+        return this.key;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setKey(Long key) {
+        this.key = key;
     }
 
     public String getFirstName() {
@@ -73,19 +74,19 @@ public class PersonVO implements Serializable {
             return false;
         }
         PersonVO p = (PersonVO) o;
-        return id == p.id && Objects.equals(firstName, p.firstName) && Objects.equals(lastName, p.lastName)
+        return key == p.key && Objects.equals(firstName, p.firstName) && Objects.equals(lastName, p.lastName)
                 && Objects.equals(address, p.address) && Objects.equals(gender, p.gender);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, gender);
+        return Objects.hash(key, firstName, lastName, gender);
     }
 
     @Override
     public String toString() {
-        String template = "Person { id = %s ,firstName= %s, lastName = %s , gender = %s}";
-        return String.format(template, id, firstName, lastName, gender);
+        String template = "Person { key = %s ,firstName= %s, lastName = %s , gender = %s}";
+        return String.format(template, key, firstName, lastName, gender);
     }
 
 }

@@ -1,4 +1,4 @@
-package br.com.cristianoaf81;
+package br.com.cristianoaf81.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import br.com.cristianoaf81.utils.MediaType;
 
 @RestController
 @RequestMapping("/api/person/v1")
-class PersonController {
+public class PersonController {
 
     @Autowired
     private PersonServices service;

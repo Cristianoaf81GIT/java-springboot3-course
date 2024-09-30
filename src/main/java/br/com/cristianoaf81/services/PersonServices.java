@@ -3,8 +3,13 @@ package br.com.cristianoaf81.services;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+
 import br.com.cristianoaf81.exceptions.ResourceNotFoundException;
 import br.com.cristianoaf81.mapper.ClassMapper;
 import br.com.cristianoaf81.mapper.ClassMapperCustom;
@@ -12,6 +17,7 @@ import br.com.cristianoaf81.model.Person;
 import br.com.cristianoaf81.data.vo.v1.PersonVO;
 import br.com.cristianoaf81.data.vo.v2.PersonVO2;
 import br.com.cristianoaf81.repositories.PersonRepository;
+import br.com.cristianoaf81.controllers.PersonController;
 
 @Service
 public class PersonServices {
@@ -36,7 +42,7 @@ public class PersonServices {
         String exceptionMessage = "Record nof found for this id";
         Supplier<ResourceNotFoundException> sup = () -> new ResourceNotFoundException(exceptionMessage);
 
-        var entity = repository.findById(person.getId()).orElseThrow(sup);
+        var entity = repository.findById(person.getKey()).orElseThrow(sup);
 
         entity.setFirstName(person.getFirstName());
         entity.setLastName(person.getLastName());
@@ -59,7 +65,9 @@ public class PersonServices {
         String exceptionMessage = "No records found for this id";
         Supplier<ResourceNotFoundException> sup = () -> new ResourceNotFoundException(exceptionMessage);
         var entity = repository.findById(id).orElseThrow(sup);
-        return ClassMapper.parseObject(entity, PersonVO.class);
+        PersonVO vo = ClassMapper.parseObject(entity, PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        return vo;
     }
 
     public List<PersonVO> findAll() {
