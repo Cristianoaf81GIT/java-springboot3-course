@@ -3,6 +3,7 @@ package br.com.cristianoaf81.services;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
+import java.util.function.Consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,23 +34,25 @@ public class PersonServices {
     public PersonVO create(PersonVO person) {
         logger.info("Creating a new person");
         var entity = ClassMapper.parseObject(person, Person.class);
-        var vo = repository.save(entity);
-        return ClassMapper.parseObject(vo, PersonVO.class);
+        var saved = repository.save(entity);
+        PersonVO vo = ClassMapper.parseObject(saved, PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+        return vo;
     }
 
     public PersonVO update(PersonVO person) {
         logger.info("Updating person");
         String exceptionMessage = "Record nof found for this id";
         Supplier<ResourceNotFoundException> sup = () -> new ResourceNotFoundException(exceptionMessage);
-
         var entity = repository.findById(person.getKey()).orElseThrow(sup);
-
         entity.setFirstName(person.getFirstName());
         entity.setLastName(person.getLastName());
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
-        var vo = repository.save(entity);
-        return ClassMapper.parseObject(vo, PersonVO.class);
+        var saved = repository.save(entity);
+        PersonVO vo = ClassMapper.parseObject(saved, PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+        return vo;
     }
 
     public void delete(Long id) {
@@ -72,7 +75,12 @@ public class PersonServices {
 
     public List<PersonVO> findAll() {
         logger.info("Finding all people");
-        return ClassMapper.parseListObjects(repository.findAll(), PersonVO.class);
+        List<PersonVO> persons =  ClassMapper.parseListObjects(repository.findAll(), PersonVO.class);
+        Consumer<PersonVO> personConsumer = (personVo) -> {
+            personVo.add(linkTo(methodOn(PersonController.class).findById(personVo.getKey())).withSelfRel());
+        };
+        persons.stream().forEach(personConsumer);
+        return persons;
     }
 
     public PersonVO2 createv2(PersonVO2 person) {
