@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import br.com.cristianoaf81.data.vo.v1.PersonVO;
 import br.com.cristianoaf81.model.Person;
 import br.com.cristianoaf81.repositories.PersonRepository;
 import br.com.cristianoaf81.services.PersonServices;
@@ -55,17 +56,48 @@ class PersonServicesTest {
 
     @Test
     void testCreate() {
+        Person entity  = input.mockEntity(1);
+        Person persisted = entity;
+        persisted.setId(1L);
+        PersonVO vo = input.mockVO(1);
+        vo.setKey(1L);
+        when(repository.save(entity)).thenReturn(persisted);
+        var result = service.create(vo);
+        assertNotNull(result);
+        assertNotNull(result.getKey());
+        assertNotNull(result.getLinks());
+        assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
     }
    
     @Test
     void testUpdate() {
+        Person entity  = input.mockEntity(1);
+        entity.setId(1L);
+
+        Person persisted = entity;
+        persisted.setId(1L);
+        
+        PersonVO vo = input.mockVO(1);
+        vo.setKey(1L);
+        
+        when(repository.findById(1L)).thenReturn(Optional.of(entity));
+        when(repository.save(entity)).thenReturn(persisted);
+        
+        var result = service.update(vo);
+        assertNotNull(result);
+        assertNotNull(result.getKey());
+        assertNotNull(result.getLinks());
+        assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
     }
 
     @Test
     void testDelete() {
-    }
+        Person entity  = input.mockEntity(1);
+        entity.setId(1L);
 
-    @Test
-    void testCreateV2() {
+        when(repository.findById(1L)).thenReturn(Optional.of(entity));
+        service.findById(1L);
+        service.delete(1L);
     }
+   
 }

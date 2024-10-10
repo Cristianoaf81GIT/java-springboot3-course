@@ -83,10 +83,10 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
         return Objects.hash(key, firstName, lastName, gender);
     }
 
-    @Override
-    public String toString() {
-        String template = "Person { key = %s ,firstName= %s, lastName = %s , gender = %s}";
-        return String.format(template, key, firstName, lastName, gender);
-    }
+    // @Override
+    // public String toString() {
+    //     String template = "Person { key = %s ,firstName= %s, lastName = %s , gender = %s, links = %s}";
+    //     return String.format(template, key, firstName, lastName, gender, this.getLinks());
+    // }
 
 }
