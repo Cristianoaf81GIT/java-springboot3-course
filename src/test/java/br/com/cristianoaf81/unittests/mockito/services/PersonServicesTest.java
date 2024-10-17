@@ -3,6 +3,7 @@ package br.com.cristianoaf81.unittests.mockito.services;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import java.util.Optional;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -14,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.com.cristianoaf81.data.vo.v1.PersonVO;
+import br.com.cristianoaf81.exceptions.RequiredObjectsIsNullException;
 import br.com.cristianoaf81.model.Person;
 import br.com.cristianoaf81.repositories.PersonRepository;
 import br.com.cristianoaf81.services.PersonServices;
@@ -52,6 +54,19 @@ class PersonServicesTest {
 
     @Test
     void testFindAll() {
+        List<Person> list = input.mockEntityList();
+        when(repository.findAll()).thenReturn(list);
+        var people = service.findAll();
+        assertNotNull(people);
+        assertEquals(14, people.size());
+        
+        var personOne = people.get(1);
+        assertNotNull(personOne);
+        assertNotNull(personOne.getKey());
+        assertNotNull(personOne.getLinks());
+
+        assertTrue(personOne.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
+
     }
 
     @Test
@@ -66,7 +81,17 @@ class PersonServicesTest {
         assertNotNull(result);
         assertNotNull(result.getKey());
         assertNotNull(result.getLinks());
-        assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
+        assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));    
+    }
+
+    @Test
+    void testCreateWithNullPerson() {
+        Exception exception = assertThrows(RequiredObjectsIsNullException.class, () -> {
+            service.create(null);
+        });
+        String expectedMessage = "It\'s not allowed to persist a null object";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));    
     }
    
     @Test
@@ -91,6 +116,17 @@ class PersonServicesTest {
     }
 
     @Test
+    void testUpdateWithNullPerson() {
+        Exception exception = assertThrows(RequiredObjectsIsNullException.class, () -> {
+            service.update(null);
+        });
+        String expectedMessage = "It\'s not allowed to persist a null object";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));    
+    }
+
+
+    @Test
     void testDelete() {
         Person entity  = input.mockEntity(1);
         entity.setId(1L);
@@ -101,3 +137,4 @@ class PersonServicesTest {
     }
    
 }
+ 

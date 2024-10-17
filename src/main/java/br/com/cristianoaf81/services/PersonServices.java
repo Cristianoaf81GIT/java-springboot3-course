@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
-
+import br.com.cristianoaf81.exceptions.RequiredObjectsIsNullException;
 import br.com.cristianoaf81.exceptions.ResourceNotFoundException;
 import br.com.cristianoaf81.mapper.ClassMapper;
 import br.com.cristianoaf81.mapper.ClassMapperCustom;
@@ -32,6 +31,9 @@ public class PersonServices {
     private Logger logger = Logger.getLogger(PersonServices.class.getName());
 
     public PersonVO create(PersonVO person) {
+        if (person == null) {
+            throw new RequiredObjectsIsNullException();
+        }
         logger.info("Creating a new person");
         var entity = ClassMapper.parseObject(person, Person.class);
         var saved = repository.save(entity);
@@ -41,6 +43,9 @@ public class PersonServices {
     }
 
     public PersonVO update(PersonVO person) {
+        if (person == null) {
+            throw new RequiredObjectsIsNullException();
+        }
         logger.info("Updating person");
         String exceptionMessage = "Record nof found for this id";
         Supplier<ResourceNotFoundException> sup = () -> new ResourceNotFoundException(exceptionMessage);
