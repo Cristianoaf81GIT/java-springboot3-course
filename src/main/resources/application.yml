@@ -24,3 +24,9 @@ spring:
     show-sql: false
     open-in-view: true
 
+# limita a documentação do swagger ao path especificado
+springdoc:
+  pathsToMatch: /api/**/v1/**
+  # configura o swagger-ui
+  swagger-ui:
+    use-root-path: true

@@ -15,49 +15,54 @@ import br.com.cristianoaf81.data.vo.v1.PersonVO;
 import br.com.cristianoaf81.data.vo.v2.PersonVO2;
 import br.com.cristianoaf81.services.PersonServices;
 import br.com.cristianoaf81.utils.MediaType;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/person/v1")
+@Tag(name = "People", description = "Endpoints for Managing People")
 public class PersonController {
 
-    @Autowired
-    private PersonServices service;
+  @Autowired
+  private PersonServices service;
 
-    @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML,
-            MediaType.APPLICATION_YML })
-    public PersonVO findById(@PathVariable(value = "id") Long id) {
-        return this.service.findById(id);
-    }
+  @GetMapping(value = "/{id}",
+      produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+  public PersonVO findById(@PathVariable(value = "id") Long id) {
+    return this.service.findById(id);
+  }
 
-    @GetMapping(produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
-    public List<PersonVO> findAll() {
-        return this.service.findAll();
-    }
+  @GetMapping(
+      produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+  @Operation(summary = "Finds all people")
+  public List<PersonVO> findAll() {
+    return this.service.findAll();
+  }
 
-    @PostMapping(produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML,
-            MediaType.APPLICATION_YML }, consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML,
-                    MediaType.APPLICATION_YML })
-    public PersonVO create(@RequestBody() PersonVO person) {
-        return this.service.create(person);
-    }
+  @PostMapping(
+      produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
+      consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+  public PersonVO create(@RequestBody() PersonVO person) {
+    return this.service.create(person);
+  }
 
-    @PutMapping(produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML,
-            MediaType.APPLICATION_YML }, consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML,
-                    MediaType.APPLICATION_YML })
-    public PersonVO update(@RequestBody() PersonVO person) {
-        return this.service.update(person);
-    }
+  @PutMapping(
+      produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
+      consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+  public PersonVO update(@RequestBody() PersonVO person) {
+    return this.service.update(person);
+  }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
-        this.service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
+  @DeleteMapping(value = "/{id}")
+  public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
+    this.service.delete(id);
+    return ResponseEntity.noContent().build();
+  }
 
-    @PostMapping(value = "/v2", produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML,
-            "application/x-yaml" }, consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML,
-                    MediaType.APPLICATION_YML })
-    public PersonVO2 createv2(@RequestBody() PersonVO2 person) {
-        return this.service.createv2(person);
-    }
+  @PostMapping(value = "/v2",
+      produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, "application/x-yaml"},
+      consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+  public PersonVO2 createv2(@RequestBody() PersonVO2 person) {
+    return this.service.createv2(person);
+  }
 }
