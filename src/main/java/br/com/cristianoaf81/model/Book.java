@@ -33,7 +33,7 @@ public class Book implements Serializable {
   @Column(name = "price", nullable = false)
   private Double price;
 
-  @Column(name = "title", nullable = false)
+  @Column(name = "title", nullable = false, length = 255)
   private String title;
 
 
