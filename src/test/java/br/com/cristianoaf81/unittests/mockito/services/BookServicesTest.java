@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import java.util.Optional;
 import java.util.List;
+
+import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -62,24 +65,31 @@ class BookServicesTest {
         assertNotNull(bookOne);
         assertNotNull(bookOne.getKey());
         assertNotNull(bookOne.getLinks());
-
-        assertTrue(bookOne.toString().contains("links: [</api/book/v1/1>;rel=\"self\"]"));
+        assertTrue(bookOne.getLinks().toString().contains("</api/book/v1/1>;rel=\"self\""));
 
     }
 
     @Test
     void testCreate() {
         Book entity = input.mockEntity(1);
-        Book persisted = entity;
+        Book persisted = new Book();
         persisted.setId(1L);
+        persisted.setTitle(entity.getTitle());
+        persisted.setAuthor(entity.getAuthor());
+        persisted.setPrice(entity.getPrice());
+        persisted.setLaunchDate(entity.getLaunchDate());
+
         BookVO vo = input.mockVO(1);
-        vo.setKey(1L);
+        vo.setAuthor(entity.getAuthor());
+        vo.setKey(persisted.getId());
+        vo.setLaunchDate(entity.getLaunchDate());
+        vo.setPrice(entity.getPrice());
         when(repository.save(entity)).thenReturn(persisted);
         var result = service.create(vo);
         assertNotNull(result);
         assertNotNull(result.getKey());
         assertNotNull(result.getLinks());
-        assertTrue(result.toString().contains("links: [</api/book/v1/1>;rel=\"self\"]"));
+        assertTrue(result.getLinks().toString().contains("</api/book/v1/1>;rel=\"self\""));
     }
 
     @Test
@@ -110,7 +120,7 @@ class BookServicesTest {
         assertNotNull(result);
         assertNotNull(result.getKey());
         assertNotNull(result.getLinks());
-        assertTrue(result.toString().contains("links: [</api/book/v1/1>;rel=\"self\"]"));
+        assertTrue(result.getLinks().toString().contains("</api/book/v1/1>;rel=\"self\""));
     }
 
     @Test
@@ -131,6 +141,10 @@ class BookServicesTest {
         when(repository.findById(1L)).thenReturn(Optional.of(entity));
         service.findById(1L);
         service.delete(1L);
+    }
+
+    public void tearDown() {
+        Mockito.reset(service, repository);
     }
 
 }

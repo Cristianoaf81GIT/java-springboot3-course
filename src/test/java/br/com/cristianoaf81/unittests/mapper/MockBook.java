@@ -1,6 +1,6 @@
 package br.com.cristianoaf81.unittests.mapper;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntConsumer;
@@ -39,7 +39,7 @@ public class MockBook {
     Book book = new Book();
     book.setId(number.longValue());
     book.setAuthor("Some author" + number);
-    book.setLaunchDate(LocalDateTime.now());
+    book.setLaunchDate(new Date());
     book.setTitle("Some Title" + number);
     book.setPrice(25D);
     return book;
@@ -49,7 +49,7 @@ public class MockBook {
     BookVO book = new BookVO();
     book.setKey(number.longValue());
     book.setAuthor("Some Author" + number);
-    book.setLaunchDate(LocalDateTime.now());
+    book.setLaunchDate(new Date());
     book.setPrice(25D);
     book.setTitle("Some Title" + number);
     return book;

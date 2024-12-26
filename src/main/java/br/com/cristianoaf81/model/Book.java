@@ -2,6 +2,7 @@ package br.com.cristianoaf81.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,11 +14,10 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name="books")
+@Table(name = "books")
 public class Book implements Serializable {
 
   private static final long serialVersionUID = 9133080550416537698L;
-
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class Book implements Serializable {
 
   @Column(name = "launch_date", nullable = false)
   @Temporal(TemporalType.TIMESTAMP) // necessário para campos de data
-  private LocalDateTime launchDate;
+  private Date launchDate;
 
   @Column(name = "price", nullable = false)
   private Double price;
@@ -36,9 +36,8 @@ public class Book implements Serializable {
   @Column(name = "title", nullable = false, length = 255)
   private String title;
 
-
-  public Book() {}
-
+  public Book() {
+  }
 
   public Long getId() {
     return this.id;
@@ -56,11 +55,11 @@ public class Book implements Serializable {
     this.author = author;
   }
 
-  public LocalDateTime getLaunchDate() {
+  public Date getLaunchDate() {
     return this.launchDate;
   }
 
-  public void setLaunchDate(LocalDateTime launchDate) {
+  public void setLaunchDate(Date launchDate) {
     this.launchDate = launchDate;
   }
 
@@ -79,19 +78,23 @@ public class Book implements Serializable {
   public void setTitle(String title) {
     this.title = title;
   }
-  
+
   @Override
   public boolean equals(Object o) {
-    if (this == o) { return true; }
-    if (o == null || getClass() != o.getClass()) { return false; }
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     Book b = (Book) o;
-    return id == b.id && 
-      Objects.equals(author, b.author) && 
-      launchDate.isEqual(b.launchDate) &&
-      Objects.equals(price, b.price) &&
-      Objects.equals(title, b.title);
+    return id == b.id &&
+        Objects.equals(author, b.author) &&
+        launchDate.equals(b.launchDate) &&
+        Objects.equals(price, b.price) &&
+        Objects.equals(title, b.title);
   }
-  
+
   @Override
   public int hashCode() {
     return Objects.hash(id, author, launchDate, price, title);

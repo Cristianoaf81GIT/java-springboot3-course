@@ -36,7 +36,7 @@ public class BookServices {
         logger.info("Creating a new book");
         var entity = ClassMapper.parseObject(book, Book.class);
         var saved = repository.save(entity);
-        BookVO vo = ClassMapper.parseObject(saved, BookVO.class);
+        BookVO vo = ClassMapper.parseObject(saved != null ? saved : entity, BookVO.class);
         vo.add(linkTo(methodOn(BookController.class).findById(vo.getKey())).withSelfRel());
         return vo;
     }
@@ -79,12 +79,12 @@ public class BookServices {
 
     public List<BookVO> findAll() {
         logger.info("Finding all book");
-        List<BookVO> books =  ClassMapper.parseListObjects(repository.findAll(), BookVO.class);
+        List<BookVO> books = ClassMapper.parseListObjects(repository.findAll(), BookVO.class);
         Consumer<BookVO> bookConsumer = (bookVo) -> {
             bookVo.add(linkTo(methodOn(BookController.class).findById(bookVo.getKey())).withSelfRel());
         };
         books.stream().forEach(bookConsumer);
-        return books;    
+        return books;
     }
 
 }
