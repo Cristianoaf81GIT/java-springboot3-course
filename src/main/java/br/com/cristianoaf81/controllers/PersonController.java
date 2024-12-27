@@ -115,6 +115,19 @@ public class PersonController {
   @PostMapping(value = "/v2",
       produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, "application/x-yaml"},
       consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+  @Operation(summary = "Creates a person", description = "Creates a person endpoint version 2", tags = {"People"},
+    responses = {
+       @ApiResponse(description = "Success", responseCode = "200",
+          content = {@Content(mediaType = "application/json",
+              array = @ArraySchema(schema = @Schema(implementation = PersonVO2.class)))}),
+       @ApiResponse(description = "Success", responseCode = "200",
+          content = {@Content(mediaType = "application/x-yaml",
+        array = @ArraySchema(schema = @Schema(implementation = PersonVO2.class)))}),
+      @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+      @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+      @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+    }
+  )
   public PersonVO2 createv2(@RequestBody() PersonVO2 person) {
     return this.service.createv2(person);
   }

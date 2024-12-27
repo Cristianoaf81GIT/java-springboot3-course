@@ -1,7 +1,6 @@
 package br.com.cristianoaf81.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 import jakarta.persistence.Column;
